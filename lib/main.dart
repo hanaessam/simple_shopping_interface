@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:simple_shopping_interface/shopping_page.dart';
-import 'package:simple_shopping_interface/sign_up_page.dart';
+import 'package:simple_shopping_interface/page_animations.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +16,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: SignUpPage(),
+      home: PageAnimation(),
     );
   }
 }

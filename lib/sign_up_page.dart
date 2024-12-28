@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:simple_shopping_interface/shopping_page.dart';
 
+
 class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+  final VoidCallback onSignUpComplete;
+
+  const SignUpPage({super.key, required this.onSignUpComplete});
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
@@ -10,15 +13,13 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
 
-  TextEditingController fullNameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
-
-  // string to hold error message
   String errorMessage = '';
-
   bool isPassword = true;
 
   @override
@@ -40,49 +41,40 @@ class _SignUpPageState extends State<SignUpPage> {
                     TextFormField(
                       controller: fullNameController,
                       decoration: const InputDecoration(
-                          labelText: 'Full Name',
-                          hintText: 'Enter your full name',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          )),
+                        labelText: 'Full Name',
+                        hintText: 'Enter your full name',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                      ),
                       validator: (value) {
-                        // validate that first letter is capital
-                        // first ensure that string is not null before accessing the first letter
                         if (value == null || value.isEmpty) {
-                          errorMessage = 'you must enter your full name';
-                          return errorMessage;
+                          return 'You must enter your full name';
                         }
-                        var firstLetter = value[0];
-                        if (firstLetter == firstLetter.toUpperCase()) {
-                          return null;
-                        } else {
-                          errorMessage = 'first letter must be capital';
-                          return errorMessage;
+                        if (value[0] != value[0].toUpperCase()) {
+                          return 'First letter must be capital';
                         }
+                        return null;
                       },
                     ),
                     const SizedBox(height: 10),
                     TextFormField(
                       controller: emailController,
                       decoration: const InputDecoration(
-                          labelText: 'Email',
-                          hintText: 'Enter your email',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          )),
+                        labelText: 'Email',
+                        hintText: 'Enter your email',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                      ),
                       validator: (value) {
-                        // validate that email contains @
-                      
                         if (value == null || value.isEmpty) {
-                          errorMessage = 'you must enter your email';
-                          return errorMessage;
+                          return 'You must enter your email';
                         }
-                        if (value.contains('@')) {
-                          return null;
-                        } else {
-                          errorMessage = 'email must contain @ symbol';
-                          return errorMessage;
+                        if (!value.contains('@')) {
+                          return 'Email must contain @ symbol';
                         }
+                        return null;
                       },
                     ),
                     const SizedBox(height: 10),
@@ -107,19 +99,13 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                       ),
                       validator: (value) {
-                        // validate that password is at least 6 characters
-                        
                         if (value == null || value.isEmpty) {
-                          errorMessage = 'you must enter a password';
-                          return errorMessage;
+                          return 'You must enter a password';
                         }
-                        if (value!.length >= 6) {
-                          return null;
-                        } else {
-                          errorMessage =
-                              'password must be at least 8 characters';
-                          return errorMessage;
+                        if (value.length < 6) {
+                          return 'Password must be at least 6 characters';
                         }
+                        return null;
                       },
                     ),
                     const SizedBox(height: 10),
@@ -139,37 +125,24 @@ class _SignUpPageState extends State<SignUpPage> {
                               ? Icons.visibility_off
                               : Icons.visibility),
                         ),
-                        border: OutlineInputBorder(
+                        border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
                       ),
                       validator: (value) {
-                        // validate that password and confirm password match
-
                         if (value == null || value.isEmpty) {
-                          errorMessage = 'you must confirm your password';
-                          return errorMessage;
+                          return 'You must confirm your password';
                         }
-                        if (value == passwordController.text) {
-                          return null;
-                        } else {
-                          errorMessage = 'passwords do not match';
-                          return errorMessage;
+                        if (value != passwordController.text) {
+                          return 'Passwords do not match';
                         }
+                        return null;
                       },
                     ),
                     const SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: () {
-                        final fullName = fullNameController.text;
-                        final email = emailController.text;
-                        final password = passwordController.text;
-                        final confirmPassword = confirmPasswordController.text;
-                        if (_formKey.currentState!.validate() &&
-                            fullName.isNotEmpty &&
-                            email.isNotEmpty &&
-                            password.isNotEmpty &&
-                            confirmPassword.isNotEmpty) {
+                        if (_formKey.currentState!.validate()) {
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
@@ -181,24 +154,13 @@ class _SignUpPageState extends State<SignUpPage> {
                                   TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pop();
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ShoppingPage(
-                                                title: 'Shopping Page')),
-                                      );
+                                      widget.onSignUpComplete();
                                     },
                                     child: const Text('Close'),
                                   ),
                                 ],
                               );
                             },
-                          );
-                        } else {
-                          
-
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(errorMessage)),
                           );
                         }
                       },
@@ -214,3 +176,4 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 }
+

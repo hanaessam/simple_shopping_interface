@@ -15,6 +15,8 @@
 
  sign_up_page.dart -> contains the sign up form and validations
 
+ page_animations.dart -> contains animation for the sign up page to fade out and the shopping page to fade in.
+
  main.dart -> where you can launch the app
 
  # screenshots
