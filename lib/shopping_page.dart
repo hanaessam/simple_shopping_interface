@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ShoppingPage extends StatelessWidget {
@@ -22,9 +23,9 @@ class ShoppingPage extends StatelessWidget {
       body: ListView(
         children: [
           SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-          const Center(
+          Center(
             child: Text(
-              'Our Products',
+              tr("our_products"),
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
@@ -77,16 +78,16 @@ class ShoppingPage extends StatelessWidget {
                             onPressed: () {
                               // display snackbar
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Item added to cart'),
+                                SnackBar(
+                                  content: Text(tr("item_added")),
                                 ),
                               );
                             },
-                            child: const Row(
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.shopping_cart),
-                                Text('Add to Cart'),
+                                const Icon(Icons.shopping_cart),
+                                Text(tr("add_to_cart")),
                               ],
                             ),
                           ),
@@ -100,8 +101,8 @@ class ShoppingPage extends StatelessWidget {
           ),
           Column(
             children: [
-              const Text(
-                'Hot Offers',
+              Text(
+                tr("hot_offers"),
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.03),
@@ -130,7 +131,7 @@ class ShoppingPage extends StatelessWidget {
                             Expanded(
                                 child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text('Offer ${index + 1}'),
+                              child: Text('${tr("offer")} ${index + 1}'),
                             )),
                           ],
                         ),

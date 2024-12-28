@@ -19,6 +19,9 @@
 
  main.dart -> where you can launch the app
 
+ ## Added Localization 
+ ![alt text](flutter_08.png) ![alt text](flutter_09.png)
+
  # screenshots
 
 

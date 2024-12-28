@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_shopping_interface/shopping_page.dart';
 import 'package:simple_shopping_interface/sign_up_page.dart';
@@ -37,7 +38,7 @@ class _PageAnimationState extends State<PageAnimation> {
             opacity: showSignUp ? 0.0 : 1.0,
             duration: const Duration(seconds: 1),
             child:
-                showSignUp ? Container() : ShoppingPage(title: 'Shopping Page'),
+                showSignUp ? Container() : ShoppingPage(title: tr("shopping_page")),
           ),
         ],
       ),

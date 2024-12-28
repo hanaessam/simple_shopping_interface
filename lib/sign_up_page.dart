@@ -1,6 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_shopping_interface/shopping_page.dart';
-
 
 class SignUpPage extends StatefulWidget {
   final VoidCallback onSignUpComplete;
@@ -27,7 +26,20 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Sign Up'),
+        title: Text(tr("sign_up")),
+        actions: [
+          // button to change the language
+          IconButton(
+            icon: const Icon(Icons.language),
+            onPressed: () {
+              if (context.locale == const Locale('en', 'US')) {
+                context.setLocale(const Locale('ar', 'EG'));
+              } else {
+                context.setLocale(const Locale('en', 'US'));
+              }
+            },
+          ),
+        ],
       ),
       body: Center(
         child: ListView(
@@ -176,4 +188,3 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 }
-
